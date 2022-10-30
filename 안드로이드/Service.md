@@ -2,7 +2,9 @@
 
 * 같은 Service 에서 startService를 호출 시 **onStartCommand** 메서드가 실행되고 bindService 호출 시 **onBind** 메서드가 실행된다.
 
+* [startService,bindService lifecycle 관련 참조](https://stackoverflow.com/questions/3514287/android-service-startservice-and-bindservice)
 
 # Task Manager 에서 앱을 강제로 kill process 할 시 startService 에서만 감지가 가능하다.
 
 * startService 로 실행하게 되면 앱을 강제로 kill 할 시 **onTaskRemoved** 메서드가 호출 된다.
+
