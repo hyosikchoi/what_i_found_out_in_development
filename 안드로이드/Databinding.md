@@ -116,6 +116,7 @@ class DiseaseListObservable : BaseObservable() {
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
 ```
 
