@@ -25,7 +25,7 @@ fun setOrderShippingViewModel(orderShippingViewModel: OrderShippingViewModel , l
 
 # BaseObservable() 을 통해 databinding을 Observable 형태로 사용할 수 있다.
 
-1. **Observable** 형태로 사용할 데이터를 지정한다.
+1. **Observable** 형태로 사용할 데이터 클래스를 생성한다.
 
 
 ```kotlin
@@ -44,7 +44,27 @@ class DiseaseListObservable : BaseObservable() {
 }
 ```
 
-2. layout 에 observe 할 데이터를 지정한다.
+2.  **Observable** 형태로 사용할 데이터를 지정한다.
+
+```kotlin
+ inner class DiseaseCategoryViewHolder(private val binding : ItemPlayDiseaseHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
+
+
+        fun bindHeader(diseaseModel : DiseaseListModel) {
+            if(diseaseModel is DiseaseListModel.DiseaseCategoryModel) {
+                binding.diseaseList = diseaseListObservable
+                binding.diseaseCategory = diseaseModel
+
+                binding.clDiseaseHeaderRoot.setOnClickListener {
+                    categoryOnClickListener(diseaseModel)
+                }
+
+            }
+        }
+    }
+```
+
+3. layout 에 observe 할 데이터를 지정한다.
 
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -120,6 +140,30 @@ class DiseaseListObservable : BaseObservable() {
 </layout>
 ```
 
+4. BindingAdapter 에서 Observe하는 데이터의 변경에 따라 적용될 코드를 작성한다.
 
+```
+@BindingAdapter("set_count","category")
+fun TextView.setCount(diseaseListModel: List<DiseaseListModel>?, category : String) {
+
+    var count = 0
+
+    diseaseListModel?.let {
+        it.forEach { diseaseListModel ->
+            if(diseaseListModel is DiseaseListModel.DiseaseModel && diseaseListModel.categoryName == category && diseaseListModel.isChecked) {
+                count +=1
+            }
+        }
+    }
+
+    if(count > 0) {
+        this.visibility = View.VISIBLE
+        this.text = count.toString()
+    } else {
+        this.visibility = View.GONE
+    }
+
+}
+```
 
 
