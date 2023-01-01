@@ -51,7 +51,7 @@
 
 **ex)** 
 
-![KakaoTalk_20230101_145101379](https://user-images.githubusercontent.com/56852682/210162396-6f0d4e04-9b81-4bb8-83bc-d9cd32d1bad3.jpg)
+![KakaoTalk_20230101_145101379](https://user-images.githubusercontent.com/56852682/210162396-6f0d4e04-9b81-4bb8-83bc-d9cd32d1bad3.jpg){: width="400" height="400"}
 
 
 
@@ -88,4 +88,4 @@ android:layout_marginStart="-0.5dp"
 **ex)**
 
 
-![KakaoTalk_20230101_145101379_01](https://user-images.githubusercontent.com/56852682/210162407-09abaf84-c6ce-4e6e-a0cc-ca47663b667a.jpg)
+![KakaoTalk_20230101_145101379_01](https://user-images.githubusercontent.com/56852682/210162407-09abaf84-c6ce-4e6e-a0cc-ca47663b667a.jpg){: width="400" height="400"}
