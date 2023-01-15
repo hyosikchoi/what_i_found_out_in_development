@@ -40,3 +40,23 @@ sealed class DiseaseListModel {
 ```
 
 * 위의 예시는 질환 리스트를 아코디언 메뉴로 만들 때 **질환 헤더 타입**과 **질환 내용 타입** 두 종류를 질환 리스트를 상속받게 만들었다.
+
+
+# 각 ViewHolder 에서 item 이미지 크기 비율에 맞게끔 Height 자동 조절 되게 하는 방법. 
+
+* 1. ImageView 의 layout_height 를 **wrap_content** 로 지정하여 이미지의 크기에 따라 
+동적으로 처리하게끔 한다.
+
+* 2. 1의 방법으로 통해 Height 가 동적으로 변하기는 하지만 width 를 가득 채우면서 그에 맞는 비율로 동적으로 height 가 늘어나진 않는다. width 를 가득 채우면서 동적으로 늘어나게 하려면 **adjustViewBounds** 속성을 **true** 로 주면 된다.
+
+```
+ <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_photo"
+        android:layout_width="@dimen/constraint_match"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/img_placeholder_goods_375" />
+```
