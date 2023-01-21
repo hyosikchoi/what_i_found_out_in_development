@@ -60,3 +60,8 @@ sealed class DiseaseListModel {
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/img_placeholder_goods_375" />
 ```
+
+
+# RecyclerView 하단의 Padding 을 주고 해당 Padding 영역도 Scroll 되게끔 하는 법.
+
+* RecyclerView 태그에 Padding 값을 준 이후에 **android:clipToPadding="false"** 속성을 주면 된다. 
