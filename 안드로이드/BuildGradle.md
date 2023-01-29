@@ -1,41 +1,84 @@
-# Android Library MultiModule 작성 시 Flavor 및 BuildType 설정 방법
+# Android Library MultiModule 작성 시 CommonGradle 설정 방법
 
-* 원래 App 모듈의 Flavor 와 BuildType 을 맞춰줘야 한다.
-
-* App 모듈 gradle 에서 Flavor 및 BuildType 설정
+* gradle 파일에서 변수를 설정하여 library module인지 application module인지 조건을 통해 설정 값들을 분기 처리한다.
 
 ```
-// Custom Build Variant
-    flavorDimensions "app"
-    productFlavors {fitpet {}}
-    apply from: project.file('build-develop.gradle')
-    apply from: project.file('build-staging.gradle')
-    apply from: project.file('build-product.gradle')
-    apply from: project.file('build-release.gradle')
-    android.variantFilter { variant ->
-        variant.setIgnore(variant.buildType.name == 'debug')
+def isLibraryPlugin = pluginManager.hasPlugin("com.android.library")
+def isApplicationPlugin = pluginManager.hasPlugin("com.android.application")
+
+if (isLibraryPlugin || isApplicationPlugin) {
+
+    android {
+        compileSdkVersion compileSdk_Version
+        buildToolsVersion buildTools_Version
+
+        defaultConfig {
+            if(isApplicationPlugin) {
+                applicationId "com.android.application"
+            }
+            minSdkVersion minSdk_Version
+            targetSdkVersion targetSdk_Version
+            versionCode versionCode
+            versionName versionName
+
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        dataBinding {
+            enabled = true
+        }
+
+        buildTypes {
+            debug {
+                debuggable true
+
+                if (!isLibraryPlugin) {
+                    applicationIdSuffix '.dev'
+                    resValue "string", "app_name", "clean_Dev"
+                }
+            }
+
+            release {
+                if(isApplicationPlugin){
+                    shrinkResources true
+                }
+                minifyEnabled true
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+                if (!isLibraryPlugin) {
+                    resValue "string", "app_name", "clean"
+                }
+            }
+
+            staging {
+                initWith debug
+                if (!isLibraryPlugin) {
+                    applicationIdSuffix '.staging'
+                    resValue "string", "app_name", "clean_Staging"
+                }
+            }
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
+
+        // Unit Test를 위한 Option
+        testOptions {
+            unitTests.includeAndroidResources = true
+            // return 시 exception 대신에 default Value 를 return 하도록 설정.
+            unitTests.returnDefaultValues = true
+        }
     }
+}
 ```
 
-* app 모듈에는 file 형태로 buildType 이 develop , staging , product , release 가 구성되어 있다.
+* 참고로 **shrinkResources** 값은 Library Module 에서는 설정 안된다.
 
+* 또한 **applicationId** 값도 Application Module 에서만 작성 되어야 한다.
 
-* Android Library Module gradle 에서 Flavor 및 BuildType 설정
-
-```
- // Custom Build Variant
-    flavorDimensions "app"
-    productFlavors {fitpet {}}
-    android.variantFilter { variant ->
-        variant.setIgnore(variant.buildType.name == 'debug')
-    }
-
-    buildTypes {
-        develop {}
-        staging {}
-        product {}
-        release {}
-    }
-```
-
-* 해당 설정을 맞춰주게 되면 App 모듈의 Variant를 develop 으로 하게 되면 Library 모듈도 따라서 develop 으로 자동 설정 되게 된다. 
+* [MultiModule Gradle 작성 참조](https://github.com/HeeGyeong/ModuleArchitecture/blob/main/CleanArchitectureStudy/android.gradle)
