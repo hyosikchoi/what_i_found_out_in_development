@@ -5,7 +5,8 @@
 
 하지만 이런 어노테이션에서 동작하는 방식은 크게 2가지로 나뉩니다.
 
-1. java.lang.reflection 을 이용해서 Class 정보를 읽어 Instance 의 타겟에 Annotation 에 해당되는 기능을 정의하는 방식
+1. java.lang.reflection 을 이용해서 Class 정보를 읽어 Instance 의 타겟에 Annotation 에 해당되는 기능을 정의하는 방식 **(리플렉션이란 객체를 통해 클래스의 정보를 분석해 내는 프로그램 기법을 말한다. 투영, 반사 라는 사전적인 의미를 지니고 있다)**
+[reflection 설명 참조](https://gyrfalcon.tistory.com/entry/Java-Reflection)
 
 2. Annotation Processing Tool(APT) 을 이용하여 Compile 단계에서 Annotation 이 정의된 타겟의 정보를 미리 정의하는 방식
 
