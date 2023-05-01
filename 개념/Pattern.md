@@ -11,9 +11,9 @@
 
 * Delegate 패턴은 다음과 같은 장점을 가집니다.
 
-1. 객체 간의 결합도를 낮출 수 있습니다.
+1. 호출하는 객체와 호출되는 객체 간의 결합도를 낮출 수 있습니다.
 2. 호출되는 객체의 변경이 호출하는 객체에 영향을 미치지 않습니다.
-3. 코드의 재사용성을 높일 수 있습니다.
+3. **코드의 재사용성**을 높일 수 있습니다.
 4. 호출하는 객체가 호출되는 객체의 내부 구조를 알 필요가 없습니다.
 
 하지만, Delegate 패턴을 사용하면서 주의할 점도 있습니다.
@@ -49,5 +49,15 @@ fun main() {
 ```
 
 위 코드에서 PrinterDelegate는 Printer 인터페이스를 구현하고, 생성자에서 Printer 객체를 주입받아 사용합니다. PrinterDelegate는 Printer의 기능을 대신 수행하기 위해, Printer 객체를 멤버 변수로 가지고 있습니다. PrinterDelegate에서는 Printer 객체의 기능을 수행하기 전과 후에 추가적인 로직을 실행합니다. 이를 통해, PrinterDelegate는 Printer 객체의 기능을 대신 수행하면서, 기존의 Printer 객체를 변경하지 않고, 새로운 기능을 추가할 수 있습니다. 이를 통해, PrinterDelegate는 결합도가 낮아지고, 코드 재사용성이 높아집니다.
+
+
+# DI 패턴 vs Delegate 패턴
+
+* DI 패턴은 의존성 주입을 통해 객체 간의 결합도를 낮추고, 객체를 보다 유연하게 사용할 수 있도록 합니다. Activity에서 DI 패턴을 사용하여 ViewModel 객체를 생성하면, ViewModel 객체는 Activity에 **종속되지 않고**, 다른 객체에서도 사용할 수 있습니다. 
+
+그렇기 때문에 Hilt 에서도 의존성 주입을 할 때 Module 에서 컴포넌트의 LifeCycle 을 지정하게 됩니다. (ex. SingletonComponent::class , ViewModelComponent::class)
+
+
+* 반면에, delegate 패턴은 기존 객체의 기능을 대신 수행하면서 새로운 기능을 추가할 수 있는 객체를 만드는 것입니다. Activity에서 delegate 패턴을 이용하여 ViewModel 객체를 생성하면, ViewModel 객체는 Activity의 **라이프사이클과 함께 관리되며**, Activity의 메서드를 호출하여 ViewModel 객체의 기능을 사용할 수 있습니다.
 
 
