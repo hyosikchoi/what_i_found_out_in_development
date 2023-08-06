@@ -31,8 +31,8 @@ Scaffold(
     HorizontalPager(
         count = pages.size,
         state = pagerState
-    ) {
-        when(pagerState.currentPage) {
+    ) { page: Int ->
+        when(page) {
             0 -> {
                 MemoScreen(viewModel = viewModel)
             }
