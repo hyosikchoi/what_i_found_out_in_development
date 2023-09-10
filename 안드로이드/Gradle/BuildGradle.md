@@ -82,3 +82,14 @@ if (isLibraryPlugin || isApplicationPlugin) {
 * 또한 **applicationId** 값도 Application Module 에서만 작성 되어야 한다.
 
 * [MultiModule Gradle 작성 참조](https://github.com/HeeGyeong/ModuleArchitecture/blob/main/CleanArchitectureStudy/android.gradle)
+
+
+
+# 오래된 프로젝트 gradle 및 kotlin 버전 마이그레이션 시 유의 사항
+
+* **Cannot choose between the following variants of** 와 같은 에러 메세지가 나올 경우 프로젝트의 **gradle/wrapper/gradle-wrapper.properties file** 에서
+```
+distributionUrl=https\://services.gradle.org/distributions/gradle-7.4.2-all.zip
+```
+
+해당 영역의 gradle 버전을 sync 할 버전으로 바꿔줘야 다운로드를 제대로 받을 수 있다. [stackoverflow 참조](https://stackoverflow.com/questions/73342537/cannot-use-kotlin-1-7-10)
