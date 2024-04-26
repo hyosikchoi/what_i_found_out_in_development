@@ -65,3 +65,15 @@ sealed class DiseaseListModel {
 # RecyclerView 하단의 Padding 을 주고 해당 Padding 영역도 Scroll 되게끔 하는 법.
 
 * RecyclerView 태그에 Padding 값을 준 이후에 **android:clipToPadding="false"** 속성을 주면 된다. 
+
+
+# RecyclerView 데이터 갱신마다 스크롤 위치 저장했다가 갱신하는 방법 (데이터 갱신마다 스크롤 위치가 변경 되는 이슈 때문) [참조](https://stackoverflow.com/questions/28658579/refreshing-data-in-recyclerview-and-keeping-its-scroll-position) 
+
+```
+// 데이터 갱신 전에 Save state 
+private Parcelable recyclerViewState;
+recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+
+// 데이터 갱신 후 Restore state
+recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+```
